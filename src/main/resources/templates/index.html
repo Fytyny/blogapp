@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="base :: head">
+
+</head>
+<body>
+    <nav th:replace="base :: topbar"/>
+    <div th:replace="base :: container">
+        <div th:fragment = "content">
+            <div sec:authorize="hasRole('ROLE_USER')">
+               <h1>
+                 <span th:text="'yo ' + ${message}"></span>
+                 </h1>
+                 <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+            </div>
+            <div sec:authorize="!isAuthenticated()"))>
+                <h1>
+                    Witaj! Nie masz jeszce konta?
+                </h1>
+                <p><a class="btn btn-primary btn-lg" href="/register" role="button">Zarejestruj się!</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
