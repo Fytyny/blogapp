@@ -1,6 +1,6 @@
 package org.fytyny.account.sevices;
 
-import org.fytyny.account.forms.dto.UserRegistrationDto;
+import org.fytyny.account.forms.dto.UserDto;
 import org.fytyny.account.model.Address;
 import org.fytyny.account.model.User;
 import org.fytyny.account.repository.AddressRepository;
@@ -20,11 +20,11 @@ public class UserServiceImpl implements UserService {
     @Resource
     AuthorityRepository authorityRepository;
     @Override
-    public User registerNew(UserRegistrationDto userRegistrationDto) throws UsernameExistsException, EmailExistsException {
-        if (!isEmailDuplicate(userRegistrationDto.getEmail())) throw new EmailExistsException("There is already user with this email in database");
-        if (!isUsernameDuplicate(userRegistrationDto.getLogin())) throw new UsernameExistsException("There is already user with this login in database");
-        User user = new User(userRegistrationDto.getLogin(), userRegistrationDto.getPassword());
-        Address address = new Address(userRegistrationDto.getEmail(), user);
+    public User registerNew(UserDto userDto) throws UsernameExistsException, EmailExistsException {
+        if (!isEmailDuplicate(userDto.getEmail())) throw new EmailExistsException("There is already user with this email in database");
+        if (!isUsernameDuplicate(userDto.getLogin())) throw new UsernameExistsException("There is already user with this login in database");
+        User user = new User(userDto.getLogin(), userDto.getPassword());
+        Address address = new Address(userDto.getEmail(), user);
         user.setAddress(address);
         user.setAuthorities(Arrays.asList(authorityRepository.findByName("ROLE_USER")));
         return userRepository.save(user);

@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @PasswordMatches
-public class UserRegistrationDto {
+public class UserDto {
     @NotNull
     @NotEmpty
     private String login;

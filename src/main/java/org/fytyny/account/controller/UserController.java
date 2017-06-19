@@ -1,6 +1,6 @@
 package org.fytyny.account.controller;
 
-import org.fytyny.account.forms.dto.UserRegistrationDto;
+import org.fytyny.account.forms.dto.UserDto;
 import org.fytyny.account.model.User;
 import org.fytyny.account.sevices.EmailExistsException;
 import org.fytyny.account.sevices.UserService;
@@ -26,13 +26,13 @@ public class UserController{
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String register(WebRequest request, Model model){
-        UserRegistrationDto userRegistrationDto = new UserRegistrationDto();
-        model.addAttribute("user", userRegistrationDto);
+        UserDto userDto = new UserDto();
+        model.addAttribute("user", userDto);
         return "registration";
     }
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView registerUserAccount
-            (@ModelAttribute("user") @Valid UserRegistrationDto accountDto,
+            (@ModelAttribute("user") @Valid UserDto accountDto,
              BindingResult result, WebRequest request, Errors errors) {
         User registered = null;
         if (!result.hasErrors()) {
@@ -45,14 +45,11 @@ public class UserController{
                 result.rejectValue("email", "message.regError");
             }
 
-        }else {
-           // result.getAllErrors().get(0).
-
         }
         return new ModelAndView("registration", "user", accountDto);
     }
 
-    private User createUserAccount(UserRegistrationDto accountDto, BindingResult result) throws EmailExistsException, UsernameExistsException {
+    private User createUserAccount(UserDto accountDto, BindingResult result) throws EmailExistsException, UsernameExistsException {
         User registered = service.registerNew(accountDto);
         return registered;
     }
